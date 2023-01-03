@@ -198,7 +198,7 @@ def main():
         port = args.port if args.port else data.get('es_port')
         username = args.username if args.username else data.get('es_username')
         password = args.password if args.password else data.get('es_password')
-        additional_http_headers = args.additional_http_headers if args.additional_http_header_ else data.get('es_additional_http_headers')
+        additional_http_headers = args.additional_http_headers if args.additional_http_headers else data.get('es_additional_http_headers')
         url_prefix = args.url_prefix if args.url_prefix is not None else data.get('es_url_prefix', '')
         use_ssl = args.ssl if args.ssl is not None else data.get('use_ssl')
         verify_certs = args.verify_certs if args.verify_certs is not None else data.get('verify_certs') is not False
@@ -213,7 +213,7 @@ def main():
     else:
         username = args.username if args.username else None
         password = args.password if args.password else None
-        additional_http_headers = args.additional_http_headers if args.additional_http_header_ else None
+        additional_http_headers = args.additional_http_headers if args.additional_http_headers else None
         aws_region = args.aws_region
         host = args.host if args.host else input('Enter Elasticsearch host: ')
         port = args.port if args.port else int(input('Enter Elasticsearch port: '))
@@ -266,7 +266,7 @@ def main():
         ca_certs=ca_certs,
         client_key=client_key)
 
-    create_index_mappings(es_client=es, ea_index=index, recreate=args.recreate, old_ea_index=old_index)
+    #create_index_mappings(es_client=es, ea_index=index, recreate=args.recreate, old_ea_index=old_index)
 
 
 if __name__ == '__main__':
