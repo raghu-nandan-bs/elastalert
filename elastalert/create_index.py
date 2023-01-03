@@ -152,6 +152,7 @@ def main():
     parser.add_argument('--port', default=os.environ.get('ES_PORT', None), type=int, help='Elasticsearch port')
     parser.add_argument('--username', default=os.environ.get('ES_USERNAME', None), help='Elasticsearch username')
     parser.add_argument('--password', default=os.environ.get('ES_PASSWORD', None), help='Elasticsearch password')
+    parser.add_argument('--additional-http-headers', default=os.environ.get('ES_ADDITIONAL_HTTP_HEADERS', None), help='Additional headers to be passed to elasticsearch when making http request')
     parser.add_argument('--url-prefix', help='Elasticsearch URL prefix')
     parser.add_argument('--no-auth', action='store_const', const=True, help='Suppress prompt for basic auth')
     parser.add_argument('--ssl', action='store_true', default=env('ES_USE_SSL', None), help='Use TLS')
@@ -197,6 +198,7 @@ def main():
         port = args.port if args.port else data.get('es_port')
         username = args.username if args.username else data.get('es_username')
         password = args.password if args.password else data.get('es_password')
+        additional_http_headers = args.additional_http_headers if args.additional_http_header_ else data.get('es_additional_http_headers')
         url_prefix = args.url_prefix if args.url_prefix is not None else data.get('es_url_prefix', '')
         use_ssl = args.ssl if args.ssl is not None else data.get('use_ssl')
         verify_certs = args.verify_certs if args.verify_certs is not None else data.get('verify_certs') is not False
@@ -211,6 +213,7 @@ def main():
     else:
         username = args.username if args.username else None
         password = args.password if args.password else None
+        additional_http_headers = args.additional_http_headers if args.additional_http_header_ else None
         aws_region = args.aws_region
         host = args.host if args.host else input('Enter Elasticsearch host: ')
         port = args.port if args.port else int(input('Enter Elasticsearch port: '))
@@ -238,7 +241,8 @@ def main():
             alias = 'elastalert_alias'
         old_index = (args.old_index if args.old_index is not None
                      else input('Name of existing index to copy? (Default None) '))
-
+    if additional_http_headers != None:
+        additional_http_headers = json.loads(additional_http_headers)
     timeout = args.timeout
 
     auth = Auth()
@@ -250,6 +254,7 @@ def main():
     es = Elasticsearch(
         host=host,
         port=port,
+        headers=additional_http_headers,
         timeout=timeout,
         use_ssl=use_ssl,
         verify_certs=verify_certs,
