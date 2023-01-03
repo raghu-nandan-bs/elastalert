@@ -7,6 +7,7 @@ from elasticsearch import RequestsHttpConnection
 from elasticsearch.client import _make_path
 from elasticsearch.client import query_params
 from elasticsearch.exceptions import TransportError
+from .util import elastalert_logger
 
 
 class ElasticSearchClient(Elasticsearch):
@@ -16,6 +17,7 @@ class ElasticSearchClient(Elasticsearch):
         """
         :arg conf: es_conn_config dictionary. Ref. :func:`~util.build_es_conn_config`
         """
+        elastalert_logger.debug(f"got header: {conf['es_additional_http_headers']}")
         super(ElasticSearchClient, self).__init__(host=conf['es_host'],
                                                   port=conf['es_port'],
                                                   url_prefix=conf['es_url_prefix'],
