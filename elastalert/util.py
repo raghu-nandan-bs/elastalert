@@ -13,8 +13,8 @@ from six import string_types
 from . import ElasticSearchClient
 from .auth import Auth
 
-logging.basicConfig()
-elastalert_logger = logging.getLogger('elastalert', level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
+elastalert_logger = logging.getLogger('elastalert')
 
 
 def get_module(module_name):
