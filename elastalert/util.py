@@ -14,7 +14,7 @@ from . import ElasticSearchClient
 from .auth import Auth
 
 logging.basicConfig()
-elastalert_logger = logging.getLogger('elastalert')
+elastalert_logger = logging.getLogger('elastalert', level=logging.DEBUG)
 
 
 def get_module(module_name):
